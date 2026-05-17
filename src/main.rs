@@ -74,22 +74,22 @@ async fn main() {
     let (tx, rx) = mpsc::channel(cli.buffer_size);
 
     // Start the pipeline with appropriate storage
-    let stats = if let Some(output_path) = &cli.output {
+    let (stats, pipeline_handle) = if let Some(output_path) = &cli.output {
         let storage = FileStorage::new(output_path.clone(), cli.max_events);
         let pipeline = Pipeline::new(storage);
         let stats = pipeline.stats();
-        tokio::spawn(async move {
+        let handle = tokio::spawn(async move {
             pipeline.run(rx).await;
         });
-        stats
+        (stats, handle)
     } else {
         let storage = InMemoryStorage::new(cli.max_events);
         let pipeline = Pipeline::new(storage);
         let stats = pipeline.stats();
-        tokio::spawn(async move {
+        let handle = tokio::spawn(async move {
             pipeline.run(rx).await;
         });
-        stats
+        (stats, handle)
     };
 
     // Start collectors
@@ -152,6 +152,9 @@ async fn main() {
     for handle in handles {
         let _ = handle.await;
     }
+
+    // Wait for pipeline to finish processing all queued events
+    let _ = pipeline_handle.await;
 
     info!("All collectors finished. {}", stats.summary());
 }
