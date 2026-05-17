@@ -1,4 +1,5 @@
 # siem-rust
+Coded by me and Devin ai helped on some errors i made
 
 SIEM Log Ingestion and Collection Engine written in Rust.
 
