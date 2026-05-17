@@ -71,7 +71,7 @@ async fn main() {
         std::process::exit(1);
     }
 
-    let (tx, rx) = mpsc::channel(cli.buffer_size);
+    let (tx, rx) = mpsc::channel(cli.buffer_size.max(1));
 
     // Start the pipeline with appropriate storage
     let (stats, pipeline_handle) = if let Some(output_path) = &cli.output {
