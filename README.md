@@ -1,6 +1,9 @@
 # siem-rust
 Coded by me and Devin ai helped on some errors i made
 
+If something right here shoots an error, send me a message on discord;
+@mucatws
+
 SIEM Log Ingestion and Collection Engine written in Rust.
 
 ## Features
