@@ -19,7 +19,9 @@ impl LogParser {
 
         // RFC 5424: <PRI>VERSION TIMESTAMP HOSTNAME APP-NAME PROCID MSGID STRUCTURED-DATA MSG
         let syslog_rfc5424 = Regex::new(
-            r"^<(\d{1,3})>(\d+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(?:\[.*?\]|-)\s*(.*)"
+        let syslog_rfc5424 = Regex::new(
+            r"^<(\d{1,3})>(\d+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(?:\[.*?\]+-|-)\s*(.*)"
+        ).expect("Invalid RFC5424 regex");
         ).expect("Invalid RFC5424 regex");
 
         let json_detector = Regex::new(r"^\s*\{").expect("Invalid JSON regex");
