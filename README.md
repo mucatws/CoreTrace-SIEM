@@ -1,4 +1,4 @@
-# siem-rust
+# CoreTrace-SIEM
 Coded by me and Devin ai helped on some errors i made
 
 If something right here shoots an error, send me a message on discord;
